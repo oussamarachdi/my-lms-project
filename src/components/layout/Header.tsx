@@ -1,5 +1,6 @@
-import { ArrowRight, CalendarDays } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Section from "./Section";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
@@ -7,22 +8,19 @@ export default function Header() {
       <Section className="h-16 flex items-center justify-between">
         <a href="#" className="flex items-center gap-2 font-semibold tracking-tight">
           <div className="h-8 w-8 rounded-lg bg-gray-900" />
-          <span>TechConf 2025</span>
+          <span>LMS Hadrumet 2k25</span>
         </a>
         <nav className="hidden md:flex items-center gap-8 text-sm">
-          <a className="hover:text-gray-700" href="#editions">Editions</a>
-          <a className="hover:text-gray-700" href="#why">Why Attend</a>
-          <a className="hover:text-gray-700" href="#faq">FAQ</a>
-          <a className="hover:text-gray-700" href="#contact">Contact</a>
+          <Link className="hover:text-gray-700" to="/">Home</Link>
+          <Link className="hover:text-gray-700" to="/shop">Aiesec Shop</Link>
+          <Link className="hover:text-gray-700" to="/team">Our Team</Link>
+          <Link className="hover:text-gray-700" to="/coming-soon">Coming Soon...</Link>
+          <Link className="hover:text-gray-700" to="/dare-gossip">Dare & Gossip Box</Link>
         </nav>
         <div className="flex items-center gap-3">
-          <a href="#register" className="hidden sm:inline-flex items-center gap-2 rounded-xl border border-gray-300 px-3 py-2 text-sm font-medium hover:bg-gray-50">
-            <CalendarDays className="h-4 w-4" />
-            Get Tickets
-          </a>
-          <a href="#register" className="inline-flex items-center gap-2 rounded-xl bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-black">
-            Register <ArrowRight className="h-4 w-4" />
-          </a>
+          <Link to="/register" className="inline-flex items-center gap-2 rounded-xl bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-black">
+            Register Now <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       </Section>
     </header>

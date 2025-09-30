@@ -7,7 +7,7 @@ export default function WhyAttend() {
   return (
     <section id="why" className="bg-white">
       <Section className="py-12 sm:py-16">
-        <h2 className="text-xl sm:text-2xl font-bold tracking-tight">Why Attend TechConf 2025?</h2>
+        <h2 className="text-xl sm:text-2xl font-bold tracking-tight">Why Attend LMS 2k25?</h2>
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {features.map((f, i) => (
             <Card key={i} className="p-6">

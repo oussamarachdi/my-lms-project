@@ -5,6 +5,7 @@ import Editions from "../components/home/Editions";
 import WhyAttend from "../components/home/WhyAttend";
 import FAQ from "../components/home/FAQ";
 import BottomCTA from "../components/home/BottomCTA";
+import TrustedBy from "../components/home/TrustedBy";
 
 
 export default function Home() {
@@ -15,6 +16,7 @@ export default function Home() {
           <Hero />
           <Editions />
           <WhyAttend />
+          <TrustedBy />
           <FAQ />
           <BottomCTA />
           </main>
