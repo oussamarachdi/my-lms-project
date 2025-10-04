@@ -1,5 +1,5 @@
 import React from "react";
-import { CalendarClock, ShoppingCart } from "lucide-react";
+import { CalendarClock } from "lucide-react";
 import type { Product } from "../../data/shop";
 
 function Badge({ children }: { children: React.ReactNode }) {

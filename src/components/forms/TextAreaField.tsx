@@ -1,4 +1,3 @@
-import React from "react";
 
 export default function TextAreaField({ label, name, placeholder }: { label: string; name: string; placeholder?: string; }) {
   return (

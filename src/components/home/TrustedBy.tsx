@@ -1,4 +1,3 @@
-import React from "react";
 import { PARTNERS } from "../../data/partners";
 import PartnersCarousel from "../home/PartnersCarousel";
 

@@ -30,7 +30,7 @@ export default function PartnersCarousel({
       { breakpoint: 768,  settings: { slidesToShow: 3 } },
       { breakpoint: 480,  settings: { slidesToShow: 1 } },
     ],
-  } as const;
+  };
 
   if (!partners?.length) {
     return <p className="text-center">No sponsors available</p>;
