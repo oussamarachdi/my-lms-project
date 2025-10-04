@@ -4,7 +4,7 @@ import Shop from "./pages/Shop";
 import Team from "./pages/Team";
 import Registration from "./pages/Registration";
 import ComingSoon from "./pages/ComingSoon";
-import ComingSoonV2 from "./pages/ComingSoonV2";
+import DareGossipBox from "./pages/DareGossip";
 
 
 export default function App() {
@@ -15,8 +15,9 @@ export default function App() {
                     <Route path="/shop" element={<Shop />} />
                     <Route path="/team" element={<Team />} />
                     <Route path="/coming-soon" element={<ComingSoon />} />
+                    <Route path="/dare-gossip" element={<DareGossipBox />} />
                     <Route path="*" element={<div>404 Not Found</div>} />
-                    <Route path="/register" element={<ComingSoonV2 />} />
+                    <Route path="/register" element={<Registration />} />
                 </Routes>
             </BrowserRouter>
         )}

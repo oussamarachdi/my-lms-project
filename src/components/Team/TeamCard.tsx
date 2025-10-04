@@ -2,26 +2,26 @@
 export type TeamMember = {
   id: string;
   name: string;
-  role: string; // position
-  photo?: string; // path/URL
+  role: string;
+  photo?: string;
   linkedin?: string;
   email?: string;
 };
 
 function Avatar({ src, alt, fallback }: { src?: string; alt: string; fallback: string }) {
   return src ? (
-    // eslint-disable-next-line @next/next/no-img-element
     <img
       src={src}
       alt={alt}
-      className="h-24 w-24 rounded-full object-cover ring-4 ring-white shadow"
+      className="h-32 w-32 rounded-full object-cover ring-4 ring-white shadow"
     />
   ) : (
-    <div className="h-24 w-24 rounded-full bg-gray-200 grid place-items-center ring-4 ring-white shadow">
-      <span className="text-xl font-semibold text-gray-600">{fallback}</span>
+    <div className="h-32 w-32 rounded-full bg-gray-200 grid place-items-center ring-4 ring-white shadow">
+      <span className="text-2xl font-semibold text-gray-600">{fallback}</span>
     </div>
   );
 }
+
 
 export default function TeamCard({ m }: { m: TeamMember }) {
   const initials = m.name
