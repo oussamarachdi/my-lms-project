@@ -26,7 +26,7 @@ export default function Header() {
           <Link className="hover:text-gray-700" to="/shop">Aiesec Shop</Link>
           <Link className="hover:text-gray-700" to="/team">Our Team</Link>
           <Link className="hover:text-gray-700" to="/coming-soon">Coming Soon...</Link>
-          <Link className="hover:text-gray-700" to="/dare-gossip">Dare & Gossip Box</Link>
+          {/* <Link className="hover:text-gray-700" to="/dare-gossip">Dare & Gossip Box</Link> */}
         </nav>
 
         {/* Right CTA */}
