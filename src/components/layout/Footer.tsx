@@ -1,5 +1,5 @@
 import Section from "./Section";
-import { Mail, Phone, Facebook, Twitter, Linkedin, Youtube } from "lucide-react";
+import { Instagram } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -17,18 +17,6 @@ export default function Footer() {
             <p className="mt-3 text-gray-600">
               Local Motivational Seminar • Sousse, Tunisia.
             </p>
-            <div className="mt-4 flex items-center gap-3 text-gray-600">
-              <Mail className="h-4 w-4" />
-              <a href="mailto:contact@lms.example" className="hover:text-gray-900">
-                contact@lms.example
-              </a>
-            </div>
-            <div className="mt-2 flex items-center gap-3 text-gray-600">
-              <Phone className="h-4 w-4" />
-              <a href="tel:+21600000000" className="hover:text-gray-900">
-                +216 00 000 000
-              </a>
-            </div>
           </div>
 
           {/* Event / Site links */}
@@ -45,17 +33,8 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold">Follow us</h4>
             <div className="mt-3 flex gap-3 text-gray-600">
-              <a aria-label="Facebook" href="#" className="p-2 rounded-lg border border-gray-200 hover:bg-gray-50">
-                <Facebook className="h-4 w-4" />
-              </a>
-              <a aria-label="Twitter" href="#" className="p-2 rounded-lg border border-gray-200 hover:bg-gray-50">
-                <Twitter className="h-4 w-4" />
-              </a>
-              <a aria-label="LinkedIn" href="#" className="p-2 rounded-lg border border-gray-200 hover:bg-gray-50">
-                <Linkedin className="h-4 w-4" />
-              </a>
-              <a aria-label="YouTube" href="#" className="p-2 rounded-lg border border-gray-200 hover:bg-gray-50">
-                <Youtube className="h-4 w-4" />
+              <a aria-label="Facebook" href="https://www.instagram.com/hadrumetlocalmotivationseminar?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" className="p-2 rounded-lg border border-gray-200 hover:bg-gray-50">
+                <Instagram className="h-4 w-4" />
               </a>
             </div>
           </div>

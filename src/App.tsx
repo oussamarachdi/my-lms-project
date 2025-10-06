@@ -26,7 +26,7 @@ export default function App() {
                             />
                         }
                     />
-                    <Route path="/dare-gossip" element={<DareGossipBox />} />
+                    {/* <Route path="/dare-gossip" element={<DareGossipBox />} /> */}
                     <Route path="/register" element={<Registration />} />
                     <Route path="/spinner-login" element={<SpinnerLogin />} />
                     <Route path="/spinner" element={<ProtectedRoute><SpinnerPage /></ProtectedRoute>} />
