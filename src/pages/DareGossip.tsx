@@ -21,7 +21,7 @@ export default function DareGossipBox() {
       const timeout = setTimeout(() => controller.abort(), 8000); // 8s
       setLoading(true);
       try {
-        const resp = await fetch("http://localhost:3002/api/dare-gossip", {
+        const resp = await fetch("https://lms-backend-ihyi.onrender.com/api/dare-gossip", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ type, text }),

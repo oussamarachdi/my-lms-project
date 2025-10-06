@@ -57,7 +57,7 @@ export default function Shop() {
           nb: payload.nb || 1,
         };
 
-        const resp = await fetch("http://localhost:3002/api/preorder", {
+        const resp = await fetch("https://lms-backend-ihyi.onrender.com/api/preorder", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body),

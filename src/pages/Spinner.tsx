@@ -15,7 +15,7 @@ export default function SpinnerPage() {
 
   useEffect(() => {
     (async () => {
-      const base = import.meta.env.VITE_API_URL || "http://localhost:3002";
+  const base = import.meta.env.VITE_API_URL || "https://lms-backend-ihyi.onrender.com";
       const res = await fetch(base + "/api/dare-gossip");
       const json = await res.json();
       const raw: any[] = json.items || [];
@@ -60,7 +60,7 @@ export default function SpinnerPage() {
   }
 
   async function handlePicked(item: Item) {
-    const base = import.meta.env.VITE_API_URL || "http://localhost:3002";
+  const base = import.meta.env.VITE_API_URL || "https://lms-backend-ihyi.onrender.com";
     console.log(item.id);
     const result = await Swal.fire({
       title: `${item.type}`,
