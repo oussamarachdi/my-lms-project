@@ -65,7 +65,7 @@ export default function Editions() {
             <iframe
               className="w-full h-full rounded-lg"
               src="https://drive.google.com/file/d/1fSO2CvQEr2CBSknf9UTSy4ulT-BL_1jL/preview"
-              title="TEDx Hadrumet 2024 - Conference Recap"
+              title="LMS 2K24 Conference Recap"
               allowFullScreen
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             />

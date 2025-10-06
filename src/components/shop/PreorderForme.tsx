@@ -6,20 +6,22 @@ export default function PreorderForm({
   onSubmit,
 }: {
   product: Product;
-  onSubmit: (payload: { productId: string; name: string; phone: string }) => void;
+  onSubmit: (payload: { productId: string; name: string; phone: string; nb: number }) => void;
 }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [err, setErr] = useState<{ name?: string; phone?: string }>({});
+  const [nb, setNb] = useState<number>(1);
+  const [err, setErr] = useState<{ name?: string; phone?: string; nb?: string }>({});
 
   function handle(e: React.FormEvent) {
     e.preventDefault();
     const next: typeof err = {};
     if (!name.trim()) next.name = "Required";
     if (!/^[\d+()\-\s]{6,}$/.test(phone)) next.phone = "Enter a valid phone";
+    if (!Number.isInteger(nb) || nb < 1) next.nb = "Enter a valid quantity (>=1)";
     setErr(next);
     if (Object.keys(next).length) return;
-    onSubmit({ productId: product.id, name: name.trim(), phone: phone.trim() });
+    onSubmit({ productId: product.id, name: name.trim(), phone: phone.trim(), nb });
   }
 
   return (
@@ -33,7 +35,7 @@ export default function PreorderForm({
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Jane Doe"
+          placeholder="Your full name"
           className={`mt-1 w-full rounded-xl border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-gray-900/10 ${
             err.name ? "border-red-300" : "border-gray-300"
           }`}
@@ -52,6 +54,20 @@ export default function PreorderForm({
           }`}
         />
         {err.phone && <span className="mt-1 block text-xs text-red-600">{err.phone}</span>}
+      </label>
+
+      <label className="block text-sm">
+        <span className="font-medium text-gray-700">Quantity</span>
+        <input
+          type="number"
+          value={nb}
+          onChange={(e) => setNb(Number(e.target.value))}
+          min={1}
+          className={`mt-1 w-32 rounded-xl border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-gray-900/10 ${
+            err.nb ? "border-red-300" : "border-gray-300"
+          }`}
+        />
+        {err.nb && <span className="mt-1 block text-xs text-red-600">{err.nb}</span>}
       </label>
 
       <button

@@ -9,7 +9,7 @@ export default function Header() {
     <header className="w-full border-b border-gray-200 bg-white/60 backdrop-blur supports-[backdrop-filter]:bg-white/50 sticky top-0 z-40">
       <section className="px-6 sm:px-10 h-16 flex items-center justify-between">
         {/* Logo */}
-        <a href="#" className="flex items-center gap-2 font-semibold tracking-tight">
+        <Link to="/" className="flex items-center gap-2 font-semibold tracking-tight">
           <div className="h-14 w-14 rounded-lg bg-gray-900">
             <img
               src="/logo-lms.png"
@@ -18,7 +18,7 @@ export default function Header() {
             />
           </div>
           <span>LMS Hadrumet 2k25</span>
-        </a>
+        </Link>
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8 text-sm">

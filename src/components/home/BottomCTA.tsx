@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Section from "../layout/Section";
 import { ArrowRight } from "lucide-react";
 
@@ -14,12 +15,12 @@ export default function BottomCTA() {
             </p>
           </div>
           <div className="flex gap-3">
-            <a
-              href="#register"
+            <Link
+              to="/register"
               className="inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 text-gray-900 font-semibold hover:bg-gray-100"
             >
               Get Your Pass <ArrowRight className="h-4 w-4" />
-            </a>
+            </Link>
           </div>
         </div>
       </Section>

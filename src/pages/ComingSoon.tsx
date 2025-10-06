@@ -3,7 +3,7 @@ import { Instagram, Facebook, Twitter } from "lucide-react";
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
 
-export default function ComingSoon() {
+export default function ComingSoon({ title, text }: { title?: string; text?: string }) {
 
   return (
     <div>
@@ -24,10 +24,10 @@ export default function ComingSoon() {
             Coming Soon
           </span>
           <h1 className="mt-4 text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight">
-            Something exciting is on the way
+            {title}
           </h1>
           <p className="mt-3 text-gray-200">
-            We’re putting the final touches on an experience you’ll love. Stay tuned.
+            {text}
           </p>
 
         

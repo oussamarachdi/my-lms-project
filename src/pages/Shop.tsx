@@ -18,15 +18,20 @@ export default function Shop() {
     setSelected(p);
   }
 
-  async function handleSubmit(payload: { productId: string; name: string; phone: string }) {
+  async function handleSubmit(payload: { productId: string; name: string; phone: string; nb?: number }) {
     if (!selected) return;
 
     // Example: show SweetAlert confirmation with payment prompt
+    const quantity = payload.nb || 1;
+    const subtotal = (typeof selected.price === "number" ? selected.price : 0) * quantity;
+
     const result = await Swal.fire({
       title: `Confirm your order`,
       html: `
         <p class="mb-2">Product: <strong>${selected.title}</strong></p>
-        <p class="mb-2">Price: <strong>${selected.price} TND</strong></p>
+        <p class="mb-2">Price: <strong>${selected.price ?? 0} TND</strong></p>
+        <p class="mb-2">Quantity: <strong>${quantity}</strong></p>
+        <p class="mb-4">Total: <strong>${subtotal} TND</strong></p>
         <p class="text-gray-600">Please confirm to proceed with payment.</p>
       `,
       icon: "info",
@@ -39,13 +44,46 @@ export default function Shop() {
 
     if (result.isConfirmed) {
       // Here you would integrate Stripe/PayPal/etc
-      await Swal.fire({
-        title: "Payment Successful 🎉",
-        text: `Thanks ${payload.name}, your pre-order is confirmed!`,
-        icon: "success",
-      });
+      // Simulate payment success then call backend to create preorder
+      try {
+        // Ensure all required fields are present
+        const body = {
+          productId: payload.productId || selected.id,
+          productTitle: selected.title,
+          // price must be a number for the backend check; default to 0 if missing
+          price: typeof selected.price === "number" ? selected.price : 0,
+          name: payload.name,
+          phone: payload.phone,
+          nb: payload.nb || 1,
+        };
 
-      setSelected(null);
+        const resp = await fetch("http://localhost:3002/api/preorder", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+
+        const data = await resp.json().catch(() => ({ ok: false }));
+        if (!resp.ok || !data.ok) {
+          const serverMsg = data?.error || `Request failed (${resp.status})`;
+          throw new Error(serverMsg);
+        }
+
+        await Swal.fire({
+          title: "Payment Successful 🎉",
+          html: `Thanks ${payload.name}, your pre-order (<strong>${quantity} × ${selected.title}</strong>) is confirmed.<br/>Total: <strong>${subtotal} TND</strong><br/>Order id: <strong>${data.id}</strong>`,
+          icon: "success",
+        });
+        setSelected(null);
+      } catch (err) {
+        console.error(err);
+        const msg = err && typeof err === "object" && "message" in err ? (err as any).message : String(err);
+        await Swal.fire({
+          title: "Error",
+          text: `${msg || "Failed to create preorder"}`,
+          icon: "error",
+        });
+      }
     }
   }
 

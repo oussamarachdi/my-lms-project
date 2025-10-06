@@ -7,6 +7,7 @@ export default function DareGossipBox() {
   const [type, setType] = useState<ItemType>("Dare");
   const [text, setText] = useState("");
   const [message, setMessage] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -14,12 +15,39 @@ export default function DareGossipBox() {
       setMessage("Please write something first!");
       return;
     }
-
-    // For now just log it – later wire to Google Sheets API
-    console.log("Submitted:", { type, text });
-
-    setMessage(`Your ${type.toLowerCase()} has been submitted ✔`);
-    setText("");
+    // POST to backend
+    (async () => {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 8000); // 8s
+      setLoading(true);
+      try {
+        const resp = await fetch("http://localhost:3002/api/dare-gossip", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ type, text }),
+          signal: controller.signal,
+        });
+        clearTimeout(timeout);
+        const data = await resp.json().catch(() => ({ ok: false }));
+        if (!resp.ok || !data.ok) {
+          throw new Error(data?.error || `Request failed (${resp.status})`);
+        }
+        setMessage(`Your ${type.toLowerCase()} has been submitted ✔ (id: ${data.id})`);
+        setText("");
+      } catch (err) {
+        clearTimeout(timeout);
+        console.error(err);
+        const msg = err && typeof err === "object" && "message" in err ? (err as any).message : String(err);
+        if (err && (err as any).name === "AbortError") {
+          setMessage("Request timed out — please try again later.");
+        } else {
+          setMessage(`Error: ${msg}`);
+        }
+      } finally {
+        clearTimeout(timeout);
+        setLoading(false);
+      }
+    })();
   }
 
   return (
@@ -74,9 +102,22 @@ export default function DareGossipBox() {
           {/* Submit */}
           <button
             type="submit"
-            className="w-full rounded-lg bg-indigo-600 text-white font-semibold px-4 py-2 hover:bg-indigo-700 transition"
+            disabled={loading}
+            className={`w-full rounded-lg bg-indigo-600 text-white font-semibold px-4 py-2 transition ${
+              loading ? "opacity-60 cursor-not-allowed" : "hover:bg-indigo-700"
+            }`}
           >
-            Submit
+            {loading ? (
+              <span className="flex items-center justify-center gap-2">
+                <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+                </svg>
+                Sending...
+              </span>
+            ) : (
+              "Submit"
+            )}
           </button>
         </form>
 
