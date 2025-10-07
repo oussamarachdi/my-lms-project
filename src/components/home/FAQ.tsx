@@ -8,7 +8,7 @@ export default function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="bg-gray-50 border-y border-gray-200">
+    <section id="faq" className="bg-gray-200 border-y border-gray-200">
       <Section className="py-12 sm:py-16">
         <h2 className="text-xl sm:text-2xl font-bold tracking-tight">Frequently Asked Questions</h2>
         <div className="mt-6 space-y-4">

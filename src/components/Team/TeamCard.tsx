@@ -13,7 +13,7 @@ function Avatar({ src, alt, fallback }: { src?: string; alt: string; fallback: s
     <img
       src={src}
       alt={alt}
-      className="h-32 w-32 rounded-full object-cover ring-4 ring-white shadow"
+      className="h-32 w-32 rounded-full object-cover bg-gray-400 ring-4 ring-white shadow"
     />
   ) : (
     <div className="h-32 w-32 rounded-full bg-gray-200 grid place-items-center ring-4 ring-white shadow">

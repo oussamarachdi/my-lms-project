@@ -79,13 +79,6 @@ export default function Header() {
           >
             Coming Soon...
           </Link>
-          <Link
-            className="block hover:text-gray-700"
-            to="/dare-gossip"
-            onClick={() => setOpen(false)}
-          >
-            Dare & Gossip Box
-          </Link>
 
           <Link
             to="/register"

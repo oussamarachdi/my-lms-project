@@ -64,7 +64,7 @@ export default function Editions() {
             {/* Video Content */}
             <iframe
               className="w-full h-full rounded-lg"
-              src="https://drive.google.com/file/d/1fSO2CvQEr2CBSknf9UTSy4ulT-BL_1jL/preview"
+              src="https://drive.google.com/file/d/1mf_tF0EuzJKxZwL_eZw7emNV7FObGECp/preview"
               title="LMS 2K24 Conference Recap"
               allowFullScreen
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

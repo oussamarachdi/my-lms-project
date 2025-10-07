@@ -19,42 +19,48 @@ export default function Shop() {
   }
 
   async function handleSubmit(payload: { productId: string; name: string; phone: string; nb?: number }) {
-    if (!selected) return;
+  if (!selected) return;
 
-    // Example: show SweetAlert confirmation with payment prompt
-    const quantity = payload.nb || 1;
-    const subtotal = (typeof selected.price === "number" ? selected.price : 0) * quantity;
+  const quantity = payload.nb || 1;
+  const unitPrice = typeof selected.price === "number" ? selected.price : 0;
+  const subtotal = unitPrice * quantity;
 
-    const result = await Swal.fire({
-      title: `Confirm your order`,
-      html: `
-        <p class="mb-2">Product: <strong>${selected.title}</strong></p>
-        <p class="mb-2">Price: <strong>${selected.price ?? 0} TND</strong></p>
-        <p class="mb-2">Quantity: <strong>${quantity}</strong></p>
-        <p class="mb-4">Total: <strong>${subtotal} TND</strong></p>
-        <p class="text-gray-600">Please confirm to proceed with payment.</p>
-      `,
-      icon: "info",
-      showCancelButton: true,
-      confirmButtonText: "Pay Now",
-      cancelButtonText: "Cancel",
-      confirmButtonColor: "#16a34a",
-      cancelButtonColor: "#d33",
-    });
+  const { isConfirmed, value: preorder } = await Swal.fire({
+    title: `Confirm your order`,
+    html: `
+      <p class="mb-2">Product: <strong>${selected.title}</strong></p>
+      <p class="mb-2">Price: <strong>${unitPrice} TND</strong></p>
+      <p class="mb-2">Quantity: <strong>${quantity}</strong></p>
+      <p class="mb-4">Total: <strong>${subtotal} TND</strong></p>
+      <p class="text-gray-600">Please confirm to proceed with payment.</p>
+    `,
+    icon: "info",
+    showCancelButton: true,
+    confirmButtonText: "Pay Now",
+    cancelButtonText: "Cancel",
+    confirmButtonColor: "#16a34a",
+    cancelButtonColor: "#d33",
 
-    if (result.isConfirmed) {
-      // Here you would integrate Stripe/PayPal/etc
-      // Simulate payment success then call backend to create preorder
+    // ⭐️ This shows a spinner on the confirm button during the async work
+    showLoaderOnConfirm: true,
+
+    // Keep the modal open while loading, and disable outside clicks
+    allowOutsideClick: () => !Swal.isLoading(),
+
+    // ⭐️ All your async work goes here. Throw to show a red inline error.
+    preConfirm: async () => {
       try {
-        // Ensure all required fields are present
+        // 1) Simulate payment gateway (replace with Stripe/PayPal SDK call)
+        await new Promise((r) => setTimeout(r, 800)); // fake processing delay
+
+        // 2) Call your backend to create the preorder
         const body = {
           productId: payload.productId || selected.id,
           productTitle: selected.title,
-          // price must be a number for the backend check; default to 0 if missing
-          price: typeof selected.price === "number" ? selected.price : 0,
+          price: unitPrice,
           name: payload.name,
           phone: payload.phone,
-          nb: payload.nb || 1,
+          nb: quantity,
         };
 
         const resp = await fetch("https://lms-backend-ihyi.onrender.com/api/preorder", {
@@ -63,29 +69,40 @@ export default function Shop() {
           body: JSON.stringify(body),
         });
 
-        const data = await resp.json().catch(() => ({ ok: false }));
-        if (!resp.ok || !data.ok) {
+        // Try to parse JSON even on non-2xx to extract error message
+        let data: any = null;
+        try {
+          data = await resp.json();
+        } catch {
+          /* ignore json parse errors */
+        }
+
+        if (!resp.ok || !data?.ok) {
           const serverMsg = data?.error || `Request failed (${resp.status})`;
           throw new Error(serverMsg);
         }
 
-        await Swal.fire({
-          title: "Payment Successful 🎉",
-          html: `Thanks ${payload.name}, your pre-order (<strong>${quantity} × ${selected.title}</strong>) is confirmed.<br/>Total: <strong>${subtotal} TND</strong><br/>Order id: <strong>${data.id}</strong>`,
-          icon: "success",
-        });
-        setSelected(null);
-      } catch (err) {
-        console.error(err);
-        const msg = err && typeof err === "object" && "message" in err ? (err as any).message : String(err);
-        await Swal.fire({
-          title: "Error",
-          text: `${msg || "Failed to create preorder"}`,
-          icon: "error",
-        });
+        // Return value is available as result.value after the modal resolves
+        return data; // e.g., { ok: true, id: "..." }
+      } catch (e: any) {
+        // This shows a red validation message under the confirm button
+        Swal.showValidationMessage(e?.message || "Failed to create preorder. Please try again.");
+        // Re-throwing is not necessary; returning void keeps the modal open.
       }
-    }
+    },
+  });
+
+  // If user confirmed and preConfirm returned data successfully
+  if (isConfirmed && preorder) {
+    await Swal.fire({
+      title: "Payment Successful 🎉",
+      html: `Thanks ${payload.name}, your pre-order (<strong>${quantity} × ${selected.title}</strong>) is confirmed.<br/>Total: <strong>${subtotal} TND</strong><br/>Order id: <strong>${preorder.id}</strong>`,
+      icon: "success",
+    });
+    setSelected(null);
   }
+}
+
 
   return (
     <div className="bg-white">

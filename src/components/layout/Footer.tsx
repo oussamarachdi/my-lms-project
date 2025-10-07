@@ -1,5 +1,6 @@
 import Section from "./Section";
 import { Instagram } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -23,9 +24,9 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold">Pages</h4>
             <ul className="mt-3 space-y-2 text-gray-600">
-              <li><a className="hover:text-gray-900" href="#home">Home</a></li>
-              <li><a className="hover:text-gray-900" href="#shop">AIESEC Shop</a></li>
-              <li><a className="hover:text-gray-900" href="#team">Our Team</a></li>
+              <li><Link className="hover:text-gray-900" to="/">Home</Link></li>
+              <li><Link className="hover:text-gray-900" to="/shop">AIESEC Shop</Link></li>
+              <li><Link className="hover:text-gray-900" to="/team">Our Team</Link></li>
             </ul>
           </div>
 
@@ -33,7 +34,7 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold">Follow us</h4>
             <div className="mt-3 flex gap-3 text-gray-600">
-              <a aria-label="Facebook" href="https://www.instagram.com/hadrumetlocalmotivationseminar?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" className="p-2 rounded-lg border border-gray-200 hover:bg-gray-50">
+              <a aria-label="Facebook" href="https://www.instagram.com/hadrumetlocalmotivationseminar?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" className="p-2 rounded-lg border border-gray-200 hover:bg-gray-50" target="_blank">
                 <Instagram className="h-4 w-4" />
               </a>
             </div>
